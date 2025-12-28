@@ -119,9 +119,9 @@ const AdminStudents = () => {
         image: imageUrl,
         order: formData.order,
         socials: {
-          instagram: formData.instagram || undefined,
-          linkedin: formData.linkedin || undefined,
-          email: formData.email || undefined,
+          instagram: formData.instagram || null,
+          linkedin: formData.linkedin || null,
+          email: formData.email || null,
         },
       };
 
