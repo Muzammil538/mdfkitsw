@@ -115,6 +115,31 @@ const HeroSection = () => {
   );
 };
 
+
+const LogoSection = () => {
+  return (
+    <section className="py-12 border-b border-border/10 bg-background/50 backdrop-blur-sm">
+      <div className="container mx-auto px-6 text-center">
+        <p className="text-sm text-muted-foreground mb-8 uppercase tracking-widest">In Association With</p>
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-20">
+          {[1, 2, 3].map((i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="h-20 w-40 bg-muted/20 rounded-lg flex items-center justify-center border border-border/50 hover:border-primary/30 transition-colors"
+            >
+              <span className="text-muted-foreground font-semibold">College Logo {i}</span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const AboutSection = () => {
   const features = [
     {
@@ -267,6 +292,7 @@ const HomePage = () => {
   return (
     <main className="relative noise-overlay">
       <HeroSection />
+      <LogoSection />
       <AboutSection />
       <StatsSection />
       <CTASection />

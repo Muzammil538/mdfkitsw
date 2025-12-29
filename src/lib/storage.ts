@@ -19,7 +19,7 @@ export const uploadImage = async (
   formData.append('file', file);
   formData.append('upload_preset', UPLOAD_PRESET);
   formData.append('folder', folder);
-  
+
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
     {
@@ -30,6 +30,32 @@ export const uploadImage = async (
 
   if (!response.ok) {
     throw new Error('Failed to upload image to Cloudinary');
+  }
+
+  const data: CloudinaryUploadResponse = await response.json();
+  return data.secure_url;
+};
+
+export const uploadFile = async (
+  file: File,
+  folder: string
+): Promise<string> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  formData.append('folder', folder);
+
+  // Use 'auto' or 'raw' for generic files (like PDF)
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to upload file to Cloudinary');
   }
 
   const data: CloudinaryUploadResponse = await response.json();

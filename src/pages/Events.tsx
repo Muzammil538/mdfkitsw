@@ -23,7 +23,7 @@ const EventCard = ({ event, onClick }: { event: Event; onClick: () => void }) =>
       whileHover={{ y: -10 }}
       onClick={onClick}
       className={`gradient-border rounded-2xl overflow-hidden cursor-pointer group ${
-        event.featured ? 'md:col-span-2 md:row-span-2' : ''
+        event.featured ? 'md:col-span-2 md:row-span-2 ' : ''
       }`}
     >
       {/* Image or gradient placeholder */}

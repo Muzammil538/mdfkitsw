@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/button';
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Student Body', path: '/student-body' },
+  { name: 'Members', path: '/members' },
   { name: 'Faculty', path: '/faculty' },
   { name: 'Events', path: '/events' },
+  { name: 'Reports', path: '/reports' },
   { name: 'Join MDF', path: '/join' },
 ];
 
@@ -36,9 +38,8 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'glass-strong py-3' : 'py-6'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass-strong py-3' : 'py-6'
+          }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
@@ -62,11 +63,10 @@ const Navbar = () => {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors ${
-                    location.pathname === link.path
+                  className={`relative px-4 py-2 text-sm font-medium transition-colors ${location.pathname === link.path
                       ? 'text-foreground'
                       : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                    }`}
                 >
                   {link.name}
                   {location.pathname === link.path && (
@@ -143,11 +143,10 @@ const Navbar = () => {
                 >
                   <Link
                     to={link.path}
-                    className={`text-3xl font-medium transition-colors ${
-                      location.pathname === link.path
+                    className={`text-3xl font-medium transition-colors ${location.pathname === link.path
                         ? 'gradient-text'
                         : 'text-muted-foreground hover:text-foreground'
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>

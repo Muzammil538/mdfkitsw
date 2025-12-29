@@ -15,6 +15,8 @@ import Events from "./pages/Events";
 import Faculty from "./pages/Faculty";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
+import Members from "./pages/Members";
+import Reports from "./pages/Reports";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -22,6 +24,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminFaculty from "./pages/admin/AdminFaculty";
 import AdminStudents from "./pages/admin/AdminStudents";
 import AdminEvents from "./pages/admin/AdminEvents";
+import AdminMembers from "./pages/admin/AdminMembers";
+import AdminReports from "./pages/admin/AdminReports";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +96,28 @@ const App = () => {
                 </>
               }
             />
+            <Route
+              path="/members"
+              element={
+                <>
+                  {!isLoading && <Navbar />}
+                  <PageTransition>
+                    <Members />
+                  </PageTransition>
+                </>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <>
+                  {!isLoading && <Navbar />}
+                  <PageTransition>
+                    <Reports />
+                  </PageTransition>
+                </>
+              }
+            />
 
             {/* Admin routes - no Navbar */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -99,6 +125,8 @@ const App = () => {
             <Route path="/admin/faculty" element={<AdminFaculty />} />
             <Route path="/admin/students" element={<AdminStudents />} />
             <Route path="/admin/events" element={<AdminEvents />} />
+            <Route path="/admin/members" element={<AdminMembers />} />
+            <Route path="/admin/reports" element={<AdminReports />} />
 
             {/* 404 */}
             <Route

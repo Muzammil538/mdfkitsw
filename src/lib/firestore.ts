@@ -11,7 +11,9 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { FacultyMember, StudentMember, Event } from '@/store/useContentStore';
+import { FacultyMember, StudentMember, ClubMember, Event, Report } from '@/store/useContentStore';
+// ... (keep existing code)
+
 
 // Helper to check if Firestore is available
 const checkDb = () => {
@@ -122,4 +124,63 @@ export const updateEvent = async (id: string, data: Partial<Event>): Promise<voi
 export const deleteEvent = async (id: string): Promise<void> => {
   if (!checkDb()) throw new Error('Firestore not configured');
   await deleteDoc(doc(db!, 'events', id));
+};
+
+// Club Member operations
+export const getClubMembers = async (): Promise<ClubMember[]> => {
+  if (!checkDb()) return [];
+  const q = query(collection(db!, 'members'), orderBy('order', 'asc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as ClubMember[];
+};
+
+export const addClubMember = async (data: Omit<ClubMember, 'id'>): Promise<string> => {
+  if (!checkDb()) throw new Error('Firestore not configured');
+  const docRef = await addDoc(collection(db!, 'members'), {
+    ...data,
+    createdAt: Timestamp.now(),
+  });
+  return docRef.id;
+};
+
+export const updateClubMember = async (id: string, data: Partial<ClubMember>): Promise<void> => {
+  if (!checkDb()) throw new Error('Firestore not configured');
+  const docRef = doc(db!, 'members', id);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: Timestamp.now(),
+  });
+};
+
+export const deleteClubMember = async (id: string): Promise<void> => {
+  if (!checkDb()) throw new Error('Firestore not configured');
+  await deleteDoc(doc(db!, 'members', id));
+};
+
+// Report operations
+export const getReports = async (): Promise<Report[]> => {
+  if (!checkDb()) return [];
+  const q = query(collection(db!, 'reports'), orderBy('order', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Report[];
+};
+
+export const addReport = async (data: Omit<Report, 'id'>): Promise<string> => {
+  if (!checkDb()) throw new Error('Firestore not configured');
+  const docRef = await addDoc(collection(db!, 'reports'), {
+    ...data,
+    createdAt: Timestamp.now(),
+  });
+  return docRef.id;
+};
+
+export const deleteReport = async (id: string): Promise<void> => {
+  if (!checkDb()) throw new Error('Firestore not configured');
+  await deleteDoc(doc(db!, 'reports', id));
 };

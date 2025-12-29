@@ -37,6 +37,8 @@ const AdminEvents = () => {
     description: '',
     category: 'cultural' as Event['category'],
     featured: false,
+    isUpcoming: false,
+    liveLink: '',
     images: [] as string[],
     order: 0,
   });
@@ -72,6 +74,8 @@ const AdminEvents = () => {
       description: '',
       category: 'cultural',
       featured: false,
+      isUpcoming: false,
+      liveLink: '',
       images: [],
       order: Date.now(),
     });
@@ -92,6 +96,8 @@ const AdminEvents = () => {
       description: event.description,
       category: event.category,
       featured: event.featured,
+      isUpcoming: event.isUpcoming || false,
+      liveLink: event.liveLink || '',
       images: event.images || [],
       order: event.order,
     });
@@ -368,6 +374,26 @@ const AdminEvents = () => {
                   </div>
                 </div>
 
+                <div className="flex items-center gap-3 pt-4">
+                  <Switch
+                    checked={formData.isUpcoming}
+                    onCheckedChange={(checked) => setFormData({ ...formData, isUpcoming: checked })}
+                  />
+                  <Label>Mark as Upcoming</Label>
+                </div>
+
+                {formData.isUpcoming && (
+                  <div className="pt-2">
+                    <Label htmlFor="liveLink">Live Streaming Link</Label>
+                    <Input
+                      id="liveLink"
+                      placeholder="https://youtube.com/..."
+                      value={formData.liveLink}
+                      onChange={(e) => setFormData({ ...formData, liveLink: e.target.value })}
+                    />
+                  </div>
+                )}
+
                 {/* Existing Images */}
                 {formData.images.length > 0 && (
                   <div>
@@ -384,8 +410,8 @@ const AdminEvents = () => {
                             <X className="w-5 h-5 text-destructive-foreground" />
                           </button>
                         </div>
-        ))}
-      </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 

@@ -3,38 +3,45 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { getFaculty, getStudents, getEvents } from '@/lib/firestore';
+import { getFaculty, getStudents, getEvents, getClubMembers, getReports } from '@/lib/firestore';
 import { useAdminGuard } from '@/hooks/useAdminGuard';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { 
-  Users, 
-  GraduationCap, 
-  Calendar, 
-  LogOut, 
+import {
+  Users,
+  GraduationCap,
+  Calendar,
+  LogOut,
   Settings,
   ArrowRight,
-  LayoutDashboard
+  LayoutDashboard,
+  FileText,
+  UserPlus
 } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { isLoading, isAdmin } = useAdminGuard();
-  const [stats, setStats] = useState({ faculty: 0, students: 0, events: 0 });
+  const [stats, setStats] = useState({ faculty: 0, students: 0, events: 0, members: 0, reports: 0 });
+  const [instagram, setInstagram] = useState(localStorage.getItem('mdf_instagram') || '');
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const [faculty, students, events] = await Promise.all([
+        const [faculty, students, events, members, reports] = await Promise.all([
           getFaculty(),
           getStudents(),
           getEvents(),
+          getClubMembers(),
+          getReports(),
         ]);
         setStats({
           faculty: faculty.length,
           students: students.length,
           events: events.length,
+          members: members.length,
+          reports: reports.length,
         });
       } catch (error) {
         console.error('Error loading stats:', error);
@@ -45,6 +52,14 @@ const AdminDashboard = () => {
       loadStats();
     }
   }, [isAdmin]);
+
+  const handleSaveInstagram = () => {
+    localStorage.setItem('mdf_instagram', instagram);
+    toast({
+      title: "Saved",
+      description: "Instagram handle updated successfully."
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -82,11 +97,19 @@ const AdminDashboard = () => {
     },
     {
       title: 'Students',
-      description: 'Manage student body members',
+      description: 'Manage student body',
       icon: GraduationCap,
       path: '/admin/students',
       count: stats.students,
       color: 'from-accent to-secondary',
+    },
+    {
+      title: 'Members',
+      description: 'Manage club members',
+      icon: UserPlus,
+      path: '/admin/members',
+      count: stats.members,
+      color: 'from-secondary to-primary',
     },
     {
       title: 'Events',
@@ -95,6 +118,14 @@ const AdminDashboard = () => {
       path: '/admin/events',
       count: stats.events,
       color: 'from-secondary to-primary',
+    },
+    {
+      title: 'Reports',
+      description: 'Manage reports and documents',
+      icon: FileText,
+      path: '/admin/reports',
+      count: stats.reports,
+      color: 'from-accent to-primary',
     },
   ];
 
@@ -143,7 +174,7 @@ const AdminDashboard = () => {
               <Link to={item.path}>
                 <motion.div
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="gradient-border rounded-2xl p-6 h-full group cursor-pointer"
+                  className="gradient-border rounded-2xl p-6 h-full group cursor-pointer bg-card/50"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} opacity-20 flex items-center justify-center`}>
@@ -170,7 +201,7 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="gradient-border rounded-2xl p-6"
+          className="gradient-border rounded-2xl p-6 mb-8"
         >
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -192,9 +223,41 @@ const AdminDashboard = () => {
                 Add Event
               </Button>
             </Link>
-            <Button variant="glass" className="w-full justify-start" disabled>
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
+            <Link to="/admin/reports">
+              <Button variant="glass" className="w-full justify-start">
+                <FileText className="w-4 h-4 mr-2" />
+                Add Report
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Social Media Settings */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="gradient-border rounded-2xl p-6"
+        >
+          <h2 className="text-lg font-semibold mb-4">Social Media</h2>
+          <div className="flex gap-4 items-end max-w-md">
+            <div className="flex-1">
+              <label className="text-sm font-medium mb-2 block">Instagram Handle</label>
+              <div className="flex">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-muted-foreground text-sm">
+                  @
+                </span>
+                <input
+                  type="text"
+                  className="flex h-10 w-full rounded-none rounded-r-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  placeholder="mdf_kitsw"
+                  value={instagram}
+                  onChange={(e) => setInstagram(e.target.value)}
+                />
+              </div>
+            </div>
+            <Button variant="glow" onClick={handleSaveInstagram}>
+              Save
             </Button>
           </div>
         </motion.div>

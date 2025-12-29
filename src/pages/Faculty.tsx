@@ -6,6 +6,8 @@ import { getFaculty } from '@/lib/firestore';
 import { FacultyMember } from '@/store/useContentStore';
 
 const FacultyCard = ({ member, index }: { member: FacultyMember; index: number }) => {
+  const isWide = ['principal', 'president'].some(d => member.designation?.toLowerCase().includes(d));
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -13,13 +15,14 @@ const FacultyCard = ({ member, index }: { member: FacultyMember; index: number }
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -10 }}
-      className="gradient-border rounded-2xl p-8 group"
+      className={`gradient-border rounded-2xl p-8 group ${isWide ? 'md:col-span-2 lg:col-span-4 flex flex-col md:flex-row items-center gap-8' : ''
+        }`}
     >
       {/* Avatar */}
-      <div className="relative mb-6">
+      <div className={`relative ${isWide ? 'shrink-0' : 'mb-6'}`}>
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="w-32 h-32 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden"
+          className={`${isWide ? 'w-48 h-48' : 'w-32 h-32'} mx-auto rounded-2xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center overflow-hidden`}
         >
           {member.image ? (
             <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
@@ -29,7 +32,7 @@ const FacultyCard = ({ member, index }: { member: FacultyMember; index: number }
             </span>
           )}
         </motion.div>
-        
+
         {/* Role badge */}
         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-medium whitespace-nowrap">
           {member.role}
@@ -37,12 +40,18 @@ const FacultyCard = ({ member, index }: { member: FacultyMember; index: number }
       </div>
 
       {/* Info */}
-      <div className="text-center">
-        <h3 className="text-xl font-semibold mb-1 group-hover:gradient-text transition-all">
+      <div className={isWide ? 'text-left flex-1' : 'text-center'}>
+        <h3 className={`font-semibold mb-1 group-hover:gradient-text transition-all ${isWide ? 'text-3xl' : 'text-xl'}`}>
           {member.name}
         </h3>
-        <p className="text-sm text-primary mb-1">{member.designation}</p>
+        <p className={`text-primary mb-1 ${isWide ? 'text-xl' : 'text-sm'}`}>{member.designation}</p>
         <p className="text-sm text-muted-foreground mb-4">{member.department}</p>
+
+        {isWide && (
+          <p className="text-muted-foreground mb-4 max-w-2xl">
+            Leading with vision and dedication to foster a creative environment for all students.
+          </p>
+        )}
 
         {/* Email */}
         {member.email && (
@@ -93,7 +102,7 @@ const FacultyPage = () => {
             Faculty <span className="gradient-text">Coordinators</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our dedicated faculty members who guide and support MDF's artistic endeavors, 
+            Our dedicated faculty members who guide and support MDF's artistic endeavors,
             ensuring students reach their creative potential.
           </p>
         </ScrollReveal>
