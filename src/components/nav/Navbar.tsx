@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X,  } from 'lucide-react';
+import { FaInstagram } from "react-icons/fa6";
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { name: 'Home', path: '/' },
+  { name: 'Faculty', path: '/faculty' },
   { name: 'Student Body', path: '/student-body' },
   { name: 'Members', path: '/members' },
-  { name: 'Faculty', path: '/faculty' },
   { name: 'Events', path: '/events' },
   { name: 'Reports', path: '/reports' },
   { name: 'Join MDF', path: '/join' },
@@ -82,7 +83,12 @@ const Navbar = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-4">
+            <Link to="https://www.instagram.com/mdfclub_kitsw/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <FaInstagram className="w-5 h-5" />
+              </motion.div>
+            </Link>
             <Link to="/join">
               <Button variant="glow" size="sm">
                 Join Us
@@ -156,8 +162,12 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-8"
+                className="mt-8 flex flex-col items-center gap-6"
               >
+                  {/* Instagram logo as link */}
+                  <Link to="https://www.instagram.com/mdf_kits/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    <FaInstagram className="w-12 h-12" />
+                  </Link>
                 <Link to="/join">
                   <Button variant="glow" size="lg">
                     Join MDF

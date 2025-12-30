@@ -68,9 +68,9 @@ const JoinPage = () => {
           <h2 className="text-2xl font-bold mb-8 text-center">Choose Your Path</h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
-              { name: 'Music', desc: 'Vocal, Instrumental, Band', color: 'from-primary to-accent' },
-              { name: 'Dance', desc: 'Classical, Western, Folk', color: 'from-accent to-secondary' },
-              { name: 'Fine Arts', desc: 'Painting, Sketching, Photography', color: 'from-secondary to-primary' },
+              { name: 'Music', desc: 'Vocal, Instrumental, Band', color: 'from-primary to-accent', sv: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[50%] h-[50%] object-center lucide lucide-music4-icon lucide-music-4"><path d="M9 18V5l12-2v13"/><path d="m9 9 12-2"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> },
+              { name: 'Dance', desc: 'Classical, Western, Folk', color: 'from-accent to-secondary', sv:<img className='w-[50%] h-[50%] object-center' src="https://img.icons8.com/ios-filled/50/dancing.png" alt="dancing"/> },
+              { name: 'Fine Arts', desc: 'Painting, Sketching, Photography', color: 'from-secondary to-primary', sv:<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[50%] h-[50%] object-center lucide lucide-palette-icon lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg> },
             ].map((category, index) => (
               <motion.div
                 key={index}
@@ -81,7 +81,7 @@ const JoinPage = () => {
                 whileHover={{ y: -10, scale: 1.02 }}
                 className="gradient-border rounded-2xl p-6 text-center group cursor-pointer"
               >
-                <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${category.color} opacity-20 mb-4 group-hover:opacity-40 transition-opacity`} />
+                <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${category.color} opacity-80 mb-4 group-hover:opacity-40 transition-opacity flex items-center justify-center`} >{category.sv}</div>
                 <h3 className="text-xl font-semibold mb-2 group-hover:gradient-text transition-all">
                   {category.name}
                 </h3>

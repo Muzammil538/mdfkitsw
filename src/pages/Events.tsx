@@ -90,17 +90,18 @@ const EventModal = ({ event, onClose }: { event: Event; onClose: () => void }) =
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-auto gradient-border rounded-3xl p-8"
+        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col gradient-border rounded-3xl overflow-hidden"
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-muted transition-colors bg-background/50 backdrop-blur-sm"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Content */}
+        <div className="overflow-y-auto p-8">
         <div className="space-y-6">
           <div>
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${categoryColors[event.category]} text-primary-foreground capitalize mb-4`}>
@@ -138,6 +139,7 @@ const EventModal = ({ event, onClose }: { event: Event; onClose: () => void }) =
               No images available for this event.
             </div>
           )}
+        </div>
         </div>
       </motion.div>
     </motion.div>

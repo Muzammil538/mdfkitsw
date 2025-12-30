@@ -25,6 +25,8 @@ const navItems = [
   { name: 'Faculty', path: '/admin/faculty', icon: Users },
   { name: 'Students', path: '/admin/students', icon: GraduationCap },
   { name: 'Events', path: '/admin/events', icon: Calendar },
+  { name: 'Members', path: '/admin/members', icon: Users },
+  { name: 'Reports', path: '/admin/reports', icon: Calendar },
 ];
 
 const AdminLayout = ({ children, title, description }: AdminLayoutProps) => {

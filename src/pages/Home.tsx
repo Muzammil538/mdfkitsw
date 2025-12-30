@@ -117,21 +117,35 @@ const HeroSection = () => {
 
 
 const LogoSection = () => {
+  const logos = [
+    {
+      src: './KITSW.png',
+      alt: 'KITS Warangal Logo',
+    },
+    {
+      src: './sac.png',
+      alt: 'SAC KITS Warangal Logo',
+    },
+    {
+      src: './MDF.png',
+      alt: 'MDF KITS Warangal Logo',
+    },
+  ]
   return (
     <section className="py-12 border-b border-border/10 bg-background/50 backdrop-blur-sm">
       <div className="container mx-auto px-6 text-center">
-        <p className="text-sm text-muted-foreground mb-8 uppercase tracking-widest">In Association With</p>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-20">
-          {[1, 2, 3].map((i) => (
+        {/* <p className="text-sm text-muted-foreground mb-8 uppercase tracking-widest">In Association With</p> */}
+        <div className="flex flex-wrap justify-center items-center gap-8 mt-10 md:gap-20">
+          {logos.map((i,key) => (
             <motion.div 
-              key={i}
+              key={key}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: key * 0.1 }}
               viewport={{ once: true }}
-              className="h-20 w-40 bg-muted/20 rounded-lg flex items-center justify-center border border-border/50 hover:border-primary/30 transition-colors"
+              className="h-40 w-40 bg-muted/20 rounded-lg flex items-center justify-center border border-border/50 hover:border-primary/30 transition-colors"
             >
-              <span className="text-muted-foreground font-semibold">College Logo {i}</span>
+              <img src={i.src} alt={i.alt} className="w-full h-full object-contain object-center"/>
             </motion.div>
           ))}
         </div>
@@ -294,7 +308,7 @@ const HomePage = () => {
       <HeroSection />
       <LogoSection />
       <AboutSection />
-      <StatsSection />
+      {/* <StatsSection /> */}
       <CTASection />
       <Footer />
     </main>
