@@ -45,9 +45,9 @@ const MemberCard = ({ member, index }: { member: StudentMember; index: number })
             </span>
           )}
         </div>
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary/20 text-xs text-primary font-medium">
+        {/* <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary/20 text-xs text-primary font-medium">
           {member.department}
-        </div>
+        </div> */}
       </div>
 
       {/* Info */}
@@ -111,6 +111,7 @@ const TierSection = ({ tierData }: { tierData: TierData }) => {
       className="mb-24"
     >
       {/* Tier Title */}
+      {/*  */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -118,10 +119,10 @@ const TierSection = ({ tierData }: { tierData: TierData }) => {
         transition={{ duration: 0.5 }}
         className="text-center mb-12"
       >
-        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-muted-foreground mb-4">
+        {/* <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-muted-foreground mb-4">
           <span className="w-2 h-2 rounded-full bg-primary" />
           Tier {tierData.tier}
-        </span>
+        </span> */}
         <h2 className="text-3xl md:text-4xl font-bold gradient-text">{tierData.title}</h2>
       </motion.div>
 

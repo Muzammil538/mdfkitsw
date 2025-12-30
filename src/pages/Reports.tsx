@@ -57,10 +57,10 @@ const ReportsPage = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{report.title}</h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Calendar className="w-4 h-4" />
                       {report.date}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
